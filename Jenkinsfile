@@ -6,7 +6,7 @@ pipeline {
     environment {
         MAVEN_OPTS   = '-Xmx1536m -XX:+TieredCompilation -XX:TieredStopAtLevel=1'
         // Maven image — swap tag here to upgrade globally
-        MAVEN_IMAGE  = 'maven:3.9-eclipse-temurin-21'
+        MAVEN_IMAGE  = 'maven:3.9-eclipse-temurin-25'
         // Local Maven repo cached on the host to avoid re-downloading deps
         MAVEN_CACHE  = '/tmp/jenkins-maven-cache'
         ALL_MODULES  = [
