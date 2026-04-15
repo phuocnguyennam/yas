@@ -119,7 +119,8 @@ pipeline {
                                 mvn -pl ${mod}\
                                     package -DskipTests -B -V \
                                     --no-transfer-progress\
-                                    -T 1
+                                    -T 1\
+                                    -Drevision=${env.REVISION}
                             """
                             stash name: "build-${mod}", includes: "${mod}/target/**/"
                         }
