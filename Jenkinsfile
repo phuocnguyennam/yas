@@ -106,7 +106,7 @@ pipeline {
                             mvn -pl common-library -am\
                                 install -DskipTests -B -V \
                                 --no-transfer-progress\
-                                -T 1
+                                -T 1\
                                 -Drevision=${env.REVISION}
                         """
                         modules.remove('common-library')
