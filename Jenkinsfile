@@ -98,7 +98,7 @@ pipeline {
             steps {
                 unstash 'source-code'
                 script {
-                    def modules = env.MODULES_TO_BUILD.split(',')
+                    def modules = env.MODULES_TO_BUILD.split(',').toList()
                     if (modules.contains('common-library')) {
                         echo "Building common-library first"
                         sh """
