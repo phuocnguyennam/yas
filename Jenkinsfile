@@ -116,13 +116,13 @@ pipeline {
                         def mod = module
                         BuildTask["Build: ${mod}"] = {
                             sh """
-                                mvn -pl ${mod}\
+                                mvn -pl ${mod} -am\
                                     package -DskipTests -B -V \
                                     --no-transfer-progress\
                                     -T 1\
                                     -Drevision=${env.REVISION}
                             """
-                            stash name: "build-${mod}", includes: "${mod}/target/**/"
+                            stash name: "build-${mod}", includes: "${mod}/target/**"
                         }
                     }
                     if (BuildTask.size() > 0) {
@@ -160,7 +160,8 @@ pipeline {
                                 mvn -pl ${mod}\
                                     verify -B -V \
                                     --no-transfer-progress\
-                                    -T 1
+                                    -T 1\
+                                    -Drevision=${env.REVISION}
                             """
                             def checkCoverageScript = """
                                 REPORT_FILE="${mod}/target/site/jacoco/jacoco.csv"
