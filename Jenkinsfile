@@ -99,7 +99,7 @@ pipeline {
                 unstash 'source-code'
                 script {
                     def modules = env.MODULES_TO_BUILD.split(',')
-                    if modules.contains('common-library') {
+                    if (modules.contains('common-library')) {
                         echo "Building common-library first"
                         sh """
                             mvn -pl common-library -am\
