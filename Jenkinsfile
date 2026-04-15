@@ -9,6 +9,7 @@ pipeline {
         MAVEN_IMAGE  = 'maven:3.9-eclipse-temurin-25'
         // Local Maven repo cached on the host to avoid re-downloading deps
         MAVEN_CACHE  = '/tmp/jenkins-maven-cache'
+        REVISION     = '1.0-SNAPSHOT'
         ALL_MODULES  = [
             'common-library',
             'backoffice-bff',
@@ -106,6 +107,7 @@ pipeline {
                                 install -DskipTests -B -V \
                                 --no-transfer-progress\
                                 -T 1
+                                -Drevision=${env.REVISION}
                         """
                         modules.remove('common-library')
                     }
