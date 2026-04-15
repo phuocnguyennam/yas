@@ -43,8 +43,8 @@ pipeline {
             agent any
             steps {
                 checkout scm
+                stash name: 'source-code', includes: '**/*', excludes: '.git/**'
             }
-            stash name: 'source-code', includes: '**/*', excludes: '.git/**'
         }
         stage('Change Detection') {
             agent any
