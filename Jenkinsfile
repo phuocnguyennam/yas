@@ -129,11 +129,12 @@ pipeline {
                         def mod = module
                         BuildTask["Build: ${mod}"] = {
                             sh """
-                                mvn -pl ${mod}\
+                                mvn -pl ${mod} -am\
                                     package -DskipTests -B -V -U \
                                     --no-transfer-progress\
                                     -T 1\
                                     -Drevision='1.0-SNAPSHOT'
+                                    -Dmaven.repo.local=/tmp/maven-repo-${mod}
                             """
                             stash name: "build-${mod}", includes: "${mod}/target/**"
                         }
