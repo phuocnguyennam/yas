@@ -114,7 +114,7 @@ pipeline {
                     if (modules.contains('payment') && modules.contains('payment-paypal')) {
                         // Build payment-paypal trước, rồi mới để payment build song song với các module khác
                         sh """
-                            mvn -pl payment-paypal -am \
+                            mvn -pl payment-paypal \
                                 install -DskipTests -B -V \
                                 --no-transfer-progress \
                                 -T 1 \
@@ -127,7 +127,7 @@ pipeline {
                         def mod = module
                         BuildTask["Build: ${mod}"] = {
                             sh """
-                                mvn -pl ${mod} -am\
+                                mvn -pl ${mod}\
                                     package -DskipTests -B -V \
                                     --no-transfer-progress\
                                     -T 1\
