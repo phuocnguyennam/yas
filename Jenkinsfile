@@ -114,7 +114,7 @@ pipeline {
                     if (modules.contains('payment') && modules.contains('payment-paypal')) {
                         // Build payment-paypal trước, rồi mới để payment build song song với các module khác
                         sh """
-                            mvn -pl payment-paypal \
+                            mvn -pl payment-paypal -am\
                                 install -DskipTests -B -V \
                                 --no-transfer-progress \
                                 -T 1 \
