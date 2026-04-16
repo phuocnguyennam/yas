@@ -104,10 +104,10 @@ pipeline {
                         echo "Building common-library first"
                         sh """
                             mvn -pl common-library -am\
-                                install -DskipTests -B -V \
+                                install -DskipTests -B -V -U \
                                 --no-transfer-progress\
                                 -T 1\
-                                -Drevision=${env.REVISION}
+                                -Drevision='1.0-SNAPSHOT'
                         """
                         modules.remove('common-library')
                     }
@@ -115,10 +115,10 @@ pipeline {
                         // Build payment-paypal trước, rồi mới để payment build song song với các module khác
                         sh """
                             mvn -pl payment-paypal -am\
-                                install -DskipTests -B -V \
+                                install -DskipTests -B -V -U\
                                 --no-transfer-progress \
                                 -T 1 \
-                                -Drevision=${env.REVISION}
+                                -Drevision='1.0-SNAPSHOT'
                         """
                         modules.remove('payment-paypal')
                     }
@@ -128,10 +128,10 @@ pipeline {
                         BuildTask["Build: ${mod}"] = {
                             sh """
                                 mvn -pl ${mod}\
-                                    package -DskipTests -B -V \
+                                    package -DskipTests -B -V -U \
                                     --no-transfer-progress\
                                     -T 1\
-                                    -Drevision=${env.REVISION}
+                                    -Drevision='1.0-SNAPSHOT'
                             """
                             stash name: "build-${mod}", includes: "${mod}/target/**"
                         }
@@ -172,7 +172,7 @@ pipeline {
                                     verify -B -V \
                                     --no-transfer-progress\
                                     -T 1\
-                                    -Drevision=${env.REVISION}
+                                    -Drevision='1.0-SNAPSHOT'
                             """
                             def checkCoverageScript = """
                                 REPORT_FILE="${mod}/target/site/jacoco/jacoco.csv"
