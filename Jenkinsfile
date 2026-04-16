@@ -109,6 +109,8 @@ pipeline {
                                 -T 1\
                                 -Drevision='1.0-SNAPSHOT'
                         """
+                        sh "ls -la /root/.m2/repository/com/yas/common-library/1.0-SNAPSHOT/"
+                        sh "cat /root/.m2/repository/com/yas/common-library/1.0-SNAPSHOT/common-library-1.0-SNAPSHOT.pom"
                         modules.remove('common-library')
                     }
                     if (modules.contains('payment') && modules.contains('payment-paypal')) {
