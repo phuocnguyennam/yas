@@ -99,6 +99,11 @@ pipeline {
             steps {
                 unstash 'source-code'
                 script {
+                    sh """
+                        mvn -N install -B \
+                            --no-transfer-progress \
+                            -Drevision='1.0-SNAPSHOT'
+                    """
                     def modules = env.MODULES_TO_BUILD.split(',').toList()
                     if (modules.contains('common-library')) {
                         echo "Building common-library first"
@@ -129,12 +134,11 @@ pipeline {
                         def mod = module
                         BuildTask["Build: ${mod}"] = {
                             sh """
-                                mvn -pl ${mod} -am\
+                                mvn -pl ${mod}\
                                     package -DskipTests -B -V -U \
                                     --no-transfer-progress\
                                     -T 1\
                                     -Drevision='1.0-SNAPSHOT'
-                                    -Dmaven.repo.local=/tmp/maven-repo-${mod}
                             """
                             stash name: "build-${mod}", includes: "${mod}/target/**"
                         }
