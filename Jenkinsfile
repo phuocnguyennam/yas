@@ -98,6 +98,9 @@ pipeline {
             }
             steps {
                 unstash 'source-code'
+                sh """
+                    find . -name "pom.xml" -exec sed -i 's/\\\${revision}/${env.REVISION}/g' {} +
+                """
                 script {
                     sh """
                         mvn -N install -B \
