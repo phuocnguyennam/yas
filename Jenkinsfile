@@ -159,7 +159,10 @@ pipeline {
             agent {
                 docker {
                     image "${env.MAVEN_IMAGE}"
-                    args "-v ${env.MAVEN_CACHE}:/root/.m2/repository"
+                    args """-v ${env.MAVEN_CACHE}:/root/.m2/repository \
+                        -v /var/run/docker.sock:/var/run/docker.sock \
+                        -e TESTCONTAINERS_RYUK_DISABLED=true \
+                        -e TESTCONTAINERS_HOST_OVERRIDE=host-gateway"""
                     reuseNode true
                 }
             }
