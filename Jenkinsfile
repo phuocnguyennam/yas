@@ -162,7 +162,8 @@ pipeline {
                     args """-v ${env.MAVEN_CACHE}:/root/.m2/repository \
                         -v /var/run/docker.sock:/var/run/docker.sock \
                         -e TESTCONTAINERS_RYUK_DISABLED=true \
-                        -e TESTCONTAINERS_HOST_OVERRIDE=host-gateway"""
+                        -e TESTCONTAINERS_HOST_OVERRIDE=host-gateway \
+                        -e TESTCONTAINERS_PULL_PAUSE_TIMEOUT=300"""
                     reuseNode true
                 }
             }
@@ -180,6 +181,7 @@ pipeline {
                                 echo "No build artifacts found for ${mod}, skipping tests"
                                 return
                             }
+                            sh "docker pull confluentinc/cp-kafka:7.0.9"
                             sh """
                                 mvn -pl ${mod}\
                                     verify -B -V \
